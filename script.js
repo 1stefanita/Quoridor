@@ -1,13 +1,33 @@
+let tableWidth = 800;
+let tableHeight = 600;
+
+let smVladX = 400;
+let smVladY = 300;
+
+
+let directionX = 1;
 function setup() {
-    createCanvas(800, 600);
+    createCanvas(tableWidth, tableHeight);
 }
 
 function draw() {
     background("black");
+
+    checkLimitsSMVlad();
+
     smilyFaceStefan(400,300);
     smilyFaceFilip(250,150);
-    smileyFaceVlad(450,200); 
+    smileyFaceVlad(smVladX,  smVladY); 
  
+}
+
+function checkLimitsSMVlad() 
+{
+    if(smVladX >= tableWidth) 
+    directionX *= -1;
+
+    smVladX += directionX;
+
 }
 
 function smilyFaceStefan(x,y) {
@@ -71,28 +91,28 @@ function smilyFaceFilip(x, y) {
 
 function smileyFaceVlad(x, y) {
     //BODY
-    fill("white");
-    stroke("black")
+    fill("purple");
+    stroke("red")
     circle(x, y, 50)
 
     //EYES
-    stroke("brown");
+    stroke("green");
     ellipse(x-10, y-10, 10, 5)
     ellipse(x+10, y-10, 10, 5)
     //EYE PUPILS
-    stroke("black");
-    fill("black");
+    stroke("red");
+    fill("red");
     circle(x-10, y-10, 2)
     circle(x+10, y-10, 2)
 
     //MOUTH
     stroke("green")
-    fill("black")
+    fill("red")
     arc(x, y+10, 10, 10, 0, Math.PI)
 
     //CHEEKS
     stroke("pink");
     fill("pink");
-    circle(x+20, y+5, 7);
-    circle(x-20, y+5, 7);
+    circle(x+15, y+5, 7);
+    circle(x-15, y+5, 7);
 }
