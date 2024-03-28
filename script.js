@@ -29,11 +29,7 @@ function draw() {
  
 }
 
-function checkLimitsStefan(x,y){
-    if(smStfanX >= 800) 
-        directionX *= -1;
-    smStefanX+= directionX;
-    }
+
 
     checkLimitsSMVlad();
 
