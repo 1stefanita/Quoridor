@@ -1,14 +1,31 @@
+
+
+let smStefanX=400;
+let smStefanY=300;
+let drectionX = 1;
+
 function setup() {
     createCanvas(800, 600);
 }
 
+
 function draw() {
     background("black");
-    smilyFaceStefan(400,300);
+    
+    checkLimitsStefan();
+
+    smilyFaceStefan(smStefanX, smStefanY);
     smilyFaceFilip(250,150);
     smileyFaceVlad(450,200); 
+
  
 }
+
+function checkLimitsStefan(x,y){
+    if(smStfanX >= 800) 
+        directionX *= -1;
+    snStefanX+= directionX;
+    }
 
 function smilyFaceStefan(x,y) {
     //BODY
