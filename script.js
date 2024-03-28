@@ -30,13 +30,18 @@ function draw() {
 }
 
 
-
+function checkLimitsStefan(x,y){
+    if(smStfanX >= 800) 
+        directionX *= -1;
+    smStefanX+= directionX;
+    }
+function draw(){
     checkLimitsSMVlad();
 
     smilyFaceStefan(400,300);
     smilyFaceFilip(250,150);
     smileyFaceVlad(smVladX,  smVladY); 
- 
+}
 
 
 function checkLimitsSMVlad() 
