@@ -1,11 +1,16 @@
-let smStefanX = 750;
-let smStefanY = 100;
-let directionStefanX = 1;
+let smStefan = {
+    x: 750,
+    y: 100,
+    directionX:1
+}
+
+
+
 
 function checkLimitsStefan() {
-    if (smStefanX >= tableWidth)
-        directionStefanX *= -1;
-    smStefanX += directionStefanX;
+    if (smStefan.x >= tableWidth || smStefan.x <= 0 )
+    smStefan.directionX *= -1;
+    smStefan.x += smStefan.directionX;
 
 }
 function smilyFaceStefan(x, y) {

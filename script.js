@@ -14,7 +14,7 @@ function draw() {
     checkLimitsStefan();
     checkLimitsFilip();
 
-    smilyFaceStefan(smStefanX, smStefanY);
+    smilyFaceStefan(smStefan.x, smStefan.y);
     smilyFaceFilip(smFilipX, smFilipY);
     smileyFaceVlad(smVladX, smVladY);
 }
