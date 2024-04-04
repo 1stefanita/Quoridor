@@ -1,13 +1,15 @@
-let smFilipX = 700;
-let smFilipY = 300;
 
-let directionFilipX = 1;
+let smFilip = {
+    x: 700,
+    y: 300,
+    directionX:1
+}
 
 function checkLimitsFilip() {
-    if (smFilipX >= tableWidth)
-        directionFilipX *= -1;
+    if (smFilip.x >= tableWidth || smFilip.x <=0)
+        smFilip.directionX *= -1;
 
-    smFilipX += directionFilipX;
+    smFilip.x += smFilip.directionX;
 }
 
 function smilyFaceFilip(x, y) {
