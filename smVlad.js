@@ -1,14 +1,15 @@
 let smVlad = {
     x: 400,
     y: 300,
-    directionX: 1
-}
+    directionX: 1,
+
+};
 
 function checkLimitsVlad() {
-    if (smVladX.x >= tableWidth)
+    if (smVlad.x >= tableWidth || smVlad.x <=0)
         smVlad.directionX *= -1;
 
-    smVladX.x += smVlad.directionX;
+    smVlad.x += smVlad.directionX;
 
 }
 
