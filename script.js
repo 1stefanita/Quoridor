@@ -14,8 +14,8 @@ function draw() {
     checkLimitsStefan();
     checkLimitsFilip();
 
+    smileyFaceVlad(smVlad.x, smVlad.y);
     smilyFaceStefan(smStefanX, smStefanY);
     smilyFaceFilip(smFilipX, smFilipY);
-    smileyFaceVlad(smVladX, smVladY);
 }
 //tot ce e pana aici las, restul sterg
