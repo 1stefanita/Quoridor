@@ -2,14 +2,20 @@
 let smFilip = {
     x: 700,
     y: 300,
-    directionX:1
+    directionX:1,
+    directionY:1,
+    speedX: 33,
+    speedY: 13,
 }
 
 function checkLimitsFilip() {
-    if (smFilip.x >= tableWidth || smFilip.x <=0)
-        smFilip.directionX *= -1;
+    //verificare pe dreapta+stanga
+    if (smFilip.x >= tableWidth || smFilip.x <=0) smFilip.directionX *= -1;
+        smFilip.x += smFilip.directionX * smFilip.speedX ;
 
-    smFilip.x += smFilip.directionX;
+    //verificare pe jos+sus
+    if (smFilip.y >= tableWidth || smFilip.y <=0) smFilip.directionY *= -1;
+    smFilip.y += smFilip.directionY * smFilip.speedY ;
 }
 
 function smilyFaceFilip(x, y) {
