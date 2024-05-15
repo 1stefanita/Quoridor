@@ -124,3 +124,16 @@ function submitNames() {
     player1Name = player1Input.value();
     player2Name = player2Input.value();
 }
+function draw() {
+    //functie care deseneaza patratul
+    background("lightblue");
+    patrat.afisare(4, 4);
+
+    // Display player names
+    textSize(20);
+    fill('black');
+    textStyle(NORMAL);
+
+    text("Player 1: " + player1Name, 700, 20);
+    text("Player 2: " + player2Name, 700, 40);
+}
