@@ -85,3 +85,27 @@ reset() {
                     this.patrat[r][c].color = "green";
     }
 }
+var patrat = new Patrat();
+var resetbt;
+
+function setup() {
+    //functie care initializeaza patratul
+    createCanvas(canvasWidth, canvasHeight);
+    patrat.initializare();
+    resetbt = createButton("RESET");
+    resetbt.position(900,60);
+    resetbt.size(60, 25);
+    resetbt.mousePressed(reset);
+    resetbt.style("background-color", "lightgreen");
+ // Create input fields
+    player1Input = createInput('');
+    player1Input.position(900, 10);
+
+    player2Input = createInput('');
+    player2Input.position(900, 35);
+
+    // Create submit button
+    submitButton = createButton('Submit');
+    submitButton.position(900, 85);
+    submitButton.mousePressed(submitNames);
+}
