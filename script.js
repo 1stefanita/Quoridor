@@ -47,3 +47,19 @@ class Patrat {
             }
         }
     }
+
+afisare(xInit, y) {
+        //afiseaza patratul
+        let x = xInit;
+        for (var r = 0; r < length; r++) {
+            x = xInit;
+            for (var c = 0; c < length; c++) {
+                stroke("black");
+                strokeWeight(5);
+                fill(this.patrat[r][c].color);
+                rect(x, y, cubeSize, cubeSize);
+                x += cubeSize + 10; // Add spacing between rectangles
+            }
+            y += cubeSize + 10; // Add spacing between rows
+        }
+    }
