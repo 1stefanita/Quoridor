@@ -109,3 +109,8 @@ function setup() {
     submitButton.position(900, 85);
     submitButton.mousePressed(submitNames);
 }
+
+function mouseClicked() {
+    //functie care verifica daca butonul a fost apasat
+    patrat.clicked(mouseX, mouseY);
+}
