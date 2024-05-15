@@ -17,3 +17,9 @@ var player2Name = "";
     fill('blue');
     ellipse(x, y, 30, 30);
 }
+
+function pion2(x, y) {
+    //Desenat pion2
+    fill('Red');
+    ellipse(x, y, 30, 30);
+}
