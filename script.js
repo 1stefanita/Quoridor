@@ -71,3 +71,17 @@ reset() {
                 this.patrat[r][c].value = "";
             }
     }
+
+  clicked(my, mx) {
+        //verifica daca am dat click pe patrat
+        for (let r = 0; r < length; r++)
+            for (let c = 0; c < length; c++)
+                if (
+                    mx >= 20 + cubeSize * r &&
+                    mx <= 20 + cubeSize + cubeSize * r &&
+                    my >= 20 + cubeSize * c &&
+                    my <= 20 + cubeSize + cubeSize * c
+                )
+                    this.patrat[r][c].color = "green";
+    }
+}
