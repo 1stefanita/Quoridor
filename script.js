@@ -63,3 +63,11 @@ afisare(xInit, y) {
             y += cubeSize + 10; // Add spacing between rows
         }
     }
+reset() {
+        //reseteaza patratul
+        for (let r = 0; r < length; r++)
+            for (let c = 0; c < length; c++) {
+                this.patrat[r][c].color = "white";
+                this.patrat[r][c].value = "";
+            }
+    }
