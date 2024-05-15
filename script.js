@@ -118,3 +118,9 @@ function reset() {
     //functie care reseteaza patratul
     patrat.reset();
 }
+
+function submitNames() {
+    // Get player names from input fields
+    player1Name = player1Input.value();
+    player2Name = player2Input.value();
+}
