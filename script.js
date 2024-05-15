@@ -114,3 +114,7 @@ function mouseClicked() {
     //functie care verifica daca butonul a fost apasat
     patrat.clicked(mouseX, mouseY);
 }
+function reset() {
+    //functie care reseteaza patratul
+    patrat.reset();
+}
