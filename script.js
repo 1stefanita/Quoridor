@@ -11,3 +11,9 @@ var player1Input, player2Input, submitButton;
 
 var player1Name = "";
 var player2Name = "";
+  
+  function pion1(x, y) {
+    //Desenat pion1
+    fill('blue');
+    ellipse(x, y, 30, 30);
+}
