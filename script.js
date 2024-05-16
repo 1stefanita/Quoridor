@@ -130,8 +130,8 @@ function draw() {
     patrat.afisare(4, 4);
 
     // Display player names
-    textSize(20);
-    fill('black');
+    textSize(15);
+    fill('red');
     textStyle(NORMAL);
 
     text("Player 1: " + player1Name, 700, 20);
