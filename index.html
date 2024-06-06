@@ -1,16 +1,665 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Briks Braker Game</title>
-    <script src="p5.min.js"></script>
-   <script src="script.js"></script>
-   <script src="smVlad.js"></script>
-   <script src="smilyStefasn.js"></script>
-   <script src="smFilip.js"></script>
+    <title>Quoridor</title>
 </head>
+
 <body>
-    
+    <script src="p5.min.js"></script>
+    <script>
+
+var xUser = 507;
+var yUser = 500;
+
+var xComp = 507;
+var yComp = 100;
+var ziduri1 = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+var ziduri2 = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+var input1;
+var input2;
+var moveBlue = false;
+var Player1;
+var moveRed = false;
+var Player2;
+var roundPlayer = 1;
+var xBlue;
+var yBlue;
+var xRed;
+var yRed;
+var jump = 2;
+var vGard = false;
+var hGard = false;
+var cui;
+var cuj;
+var result = [];
+var st;
+var i,j;
+var x,y;
+var zid1=9;
+var zid2=9;
+var comp = 0;
+
+let button;
+/*var xUser = 507; var yUser = 500;: Poziția inițială a jucătorului uman pe tabla de joc.
+var xComp = 507; var yComp = 100;: Poziția inițială a jucătorului computerizat pe tabla de joc.
+var ziduri1 = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]; var ziduri2 = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1];: Liste care indică numărul de ziduri disponibile pentru fiecare jucător.
+var input1; var input2;: Variabile pentru gestionarea inputului utilizatorului.
+var moveBlue = false; var Player1; var moveRed = false; var Player2;: Variabile pentru gestionarea mișcărilor și jucătorilor.
+var roundPlayer = 1;: Indică jucătorul al cărui rând este să mute (1 pentru Player1, 2 pentru Player2).
+var xBlue; var yBlue; var xRed; var yRed;: Coordonatele pentru jucătorii "albastru" și "roșu".
+var jump = 2;: Variabilă pentru a controla săriturile (posibil pentru mișcările jucătorilor peste garduri).
+var vGard = false; var hGard = false;: Indică dacă un gard este vertical (vGard) sau orizontal (hGard).
+var cui; var cuj;: Coordonate temporare, probabil pentru plasarea gardurilor.
+var result = [];: Listă pentru stocarea rezultatelor (poate pentru validarea mișcărilor).
+var st; var i,j; var x,y;: Variabile generale temporare folosite în diverse părți ale codului.
+var zid1 = 9; var zid2 = 9;: Numărul inițial de ziduri disponibile pentru fiecare jucător.
+var comp = 0;: Variabilă pentru gestionarea stării computerului (posibil pentru AI).*/
+
+        function pion1(x, y) {
+            //Desenat pion1
+            fill('purple');
+            ellipse(x, y, 30, 30);
+
+        }
+
+        function pion2(x, y) {
+            //Desenat pion2
+            fill('green');
+            ellipse(x, y, 30, 30);
+/*pion1(x, y): Această funcție desenează un pion de culoare albastră la coordonatele (x, y).
+
+fill('blue');: Setează culoarea de umplere la albastru.
+ellipse(x, y, 30, 30);: Desenează un cerc (pion) cu centrul la (x, y) și un diametru de 30 de pixeli.
+pion2(x, y): Această funcție desenează un pion de culoare roșie la coordonatele (x, y).
+
+fill('Red');: Setează culoarea de umplere la roșu.
+ellipse(x, y, 30, 30);: Desenează un cerc (pion) cu centrul la (x, y) și un diametru de 30 de pixeli.*/
+        }
+        class Table {
+            static pozitieTabla() {
+                if(yComp == 500 && input1)
+                    text(input1.value() + "Ai câștigat", 0, 300);
+                if(yComp == 500 && !input1)
+                    text("Albastru a câștigat", 0, 300);
+                    
+                
+                if(yUser == 100 && input2)
+                        text(input2.value() + "Ai câștigat", 0, 300);
+                if(yUser == 100 && !input2)
+                    text("Rosu a câștigat", 0, 300);
+                
+/*static pozitieTabla(): O metodă statică a clasei Table care verifică pozițiile jucătorilor pentru a determina dacă cineva a câștigat jocul.
+if (yComp == 500 && input1): Verifică dacă jucătorul computerizat (albastru) a ajuns la coordonata y de 500 și dacă există un input pentru numele jucătorului. Dacă această condiție este adevărată, afișează mesajul că jucătorul albastru a câștigat folosind valoarea din input1.
+if (yComp == 500 && !input1): Verifică dacă jucătorul computerizat a ajuns la coordonata y de 500, dar nu există un input pentru numele jucătorului. Dacă această condiție este adevărată, afișează mesajul implicit că albastru a câștigat.
+if (yUser == 100 && input2): Verifică dacă jucătorul uman (roșu) a ajuns la coordonata y de 100 și dacă există un input pentru numele jucătorului. Dacă această condiție este adevărată, afișează mesajul că jucătorul roșu a câștigat folosind valoarea din input2.
+if (yUser == 100 && !input2): Verifică dacă jucătorul uman a ajuns la coordonata y de 100, dar nu există un input pentru numele jucătorului. Dacă această condiție este adevărată, afișează mesajul implicit că roșu a câștigat.*/
+
+    //dungile gri
+    fill("black");
+    rect(270, 65, 460, 10);
+    rect(270, 525, 460, 10);
+
+    //marginile dintre dungi
+    fill('white');
+    for (let i = 0; i < 9; i++) {
+        rect(280 + i * 40 + i * 10, 5, 40, 60);
+        rect(280 + i * 40 + i * 10, 535, 40, 60);
+    }
+}
+            static matrice() {
+
+                erase();
+                rect(0, 0, 280, 1000);
+                noErase();
+
+                // tabla propriu zisa
+                fill("white");
+                square(200, 0, 600);
+
+                //blocurile pe tabla de joc
+                fill('black');
+                for (let i = 0; i < 17; i++) {
+                    for (let j = 0; j < 17; j++) {
+                        if (i % 2 == 0 && j % 2 == 0)
+                            if (a[i][j] != 0)
+                                square(288 + i * 25, 80 + j * 25, 40);
+                    }
+                }
+            }
+/*erase(); rect(0, 0, 280, 1000); noErase();: Șterge o porțiune a ecranului la coordonatele (0, 0) cu dimensiunile 280x1000. Aceasta curăță o parte a ecranului înainte de a redesena.
+fill("white"); square(200, 0, 600);: Desenează un pătrat alb cu colțul în (200, 0) și latura de 600. Acesta reprezintă tabla de joc.
+fill('black');: Setează culoarea de umplere la negru.
+for (let i = 0; i < 17; i++) { for (let j = 0; j < 17; j++) { ... } }: Buclă dublă pentru desenarea blocurilor pe tabla de joc.
+if (i % 2 == 0 && j % 2 == 0): Condiție pentru a desena blocuri doar la pozițiile pare.
+if (a[i][j] != 0): Verifică dacă valoarea din matricea a la poziția [i][j] nu este zero (presupunând că a este o matrice definită anterior și conține informații despre plasarea blocurilor).
+square(288 + i * 25, 80 + j * 25, 40);: Desenează un pătrat negru la coordonatele (288 + i * 25, 80 + j * 25) cu latura de 40. Aceste pătrate reprezintă blocurile de pe tabla de joc.*/
+
+            static ziduri() {
+
+                //zidurile de sus
+                fill('purple');
+                for (let i = 0; i < 10; i++)
+                    if (ziduri1[i] != 0) {
+                        rect(270 + i * 40 + i * 10, 0, 10, 65);
+                    }
+
+                //zidurile de jos
+                fill('green');
+                for (let i = 0; i < 10; i++)
+                    if (ziduri2[i] != 0) {
+                        rect(270 + i * 40 + i * 10, 535, 10, 65);
+                    }
+            }
+        }
+/*fill('blue');: Setează culoarea de umplere la albastru pentru zidurile jucătorului 1 (albastru).
+
+for (let i = 0; i < 10; i++): Iterează prin primele 10 poziții ale array-ului ziduri1.
+
+if (ziduri1[i] != 0): Verifică dacă zidul la poziția i nu este zero (adică zidul este activ).
+rect(270 + i * 40 + i * 10, 0, 10, 65);: Desenează un dreptunghi (zid) de la poziția (270 + i * 50, 0) cu dimensiunile 10x65. Aceste ziduri sunt desenate în partea de sus a ecranului.
+fill('Red');: Setează culoarea de umplere la roșu pentru zidurile jucătorului 2 (roșu).
+
+for (let i = 0; i < 10; i++): Iterează prin primele 10 poziții ale array-ului ziduri2.
+
+if (ziduri2[i] != 0): Verifică dacă zidul la poziția i nu este zero (adică zidul este activ).
+rect(270 + i * 40 + i * 10, 535, 10, 65);: Desenează un dreptunghi (zid) de la poziția (270 + i * 50, 535) cu dimensiunile 10x65. Aceste ziduri sunt desenate în partea de jos a ecranului.*/
+
+
+// -1 = gard; 0 = no gard; 1 = pozitie; 3 = pion1; 4 = pion2
+var a = [
+    [1, 0, 1, 0, 1, 0, 1, 0, 3, 0, 1, 0, 1, 0, 1, 0, 1 ],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+    [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 ],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+    [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 ],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+    [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 ],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+    [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 ],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+    [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 ],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+    [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 ],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+    [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 ],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+    [1, 0, 1, 0, 1, 0, 1, 0, 4, 0, 1, 0, 1, 0, 1, 0, 1 ],
+];
+
+/*1 indică o poziție posibilă pe tabla de joc unde un pion poate fi plasat.
+0 indică o poziție goală unde nu se află niciun gard sau pion.
+3 indică poziția inițială a pionului albastru (pion1).
+4 indică poziția inițială a pionului roșu (pion2).
+-1 (nefolosit în acest segment de cod) ar indica un gard plasat.*/
+
+function setup() {
+    createCanvas(800, 600);
+
+    button = createButton('Restart');
+    button.position(1000, 80);
+    button.mousePressed(resetGame);
+    button.size(200);
+
+    button1 = createButton('Add First Player');
+    button1.position(900, 300);
+    button1.size(135, 60);
+    button1.style('background-color', this.buttonColor);
+    button1.mousePressed(displayPlayer1);
+
+    button2 = createButton('Add Second Player');
+    button2.position(900, 350);
+    button2.size(135, 60);
+    button2.style('background-color', this.buttonColor);
+    button2.mousePressed(displayPlayer2);
+
+    button3 = createButton('movePurple');
+    button3.position(50, 30);
+    button3.size(100);
+    button3.mousePressed(Blue);
+
+    button4 = createButton('moveGreen');
+    button4.position(50, 470);
+    button4.size(100);
+    button4.mousePressed(Red);
+
+    button5 = createButton('verticalGard');
+    button5.position(50, 60);
+    button5.size(100);
+    button5.mousePressed(vGard1);
+
+    button6 = createButton('horizontalGard');
+    button6.position(50, 90);
+    button6.size(100);
+    button6.mousePressed(hGard1);
+
+    button7 = createButton('verticalGard');
+    button7.position(50, 500);
+    button7.size(100);
+    button7.mousePressed(vGard2);
+
+    button8 = createButton('horizontalGard');
+    button8.position(50, 530);
+    button8.size(100);
+    button8.mousePressed(hGard2);
+
+    button9 = createButton('vs computer');
+    button9.position(830,80);
+    button9.size(100);
+    button9.mousePressed(computergame);
+
+}
+function computergame(){
+    comp = 1;
+}
+
+function displayPlayer1() {
+    input1 = createInput("Player 1");
+    input1.position(1140, 300);
+    Player1 = input1.value();
+ //functie pentru unde sa apara numele playerului
+}
+
+function displayPlayer2() {
+    input2 = createInput("Player 2");
+    input2.position(1140, 350);
+    Player2 = input2.value();
+
+}
+function resetGame() {
+    comp = 0;
+
+    xUser = 507;
+    yUser = 500;
+
+    xComp = 507;
+    yComp = 100;
+
+}
+
+function draw() {
+    // background("gray");
+    insert();
+    computer();
+}
+
+
+
+function insert() {
+    Table.matrice();
+    Table.pozitieTabla();
+    Table.ziduri();
+    pion1(xComp, yComp);
+    pion2(xUser, yUser);
+
+    if (vGard) {
+        fill('grey');
+        rect(mouseX - 45, mouseY, 90, 10);  //unde sta mouseul pe gard, lungimea gardului si latimea gardului vertical
+    }
+    if (hGard) {
+        fill('grey');
+        rect(mouseX, mouseY -45, 10, 90); //unde sta mouseul pe gard, lungimea gardului si latimea gardului orizontal
+    }
+    fill('grey');
+    for (let j = 0; j <= 16; j++)
+        for (let i = 0; i <= 16; i++) {
+            if (a[i][j] == -1)
+                if (i % 2 == 1 && j % 2 == 1)
+                    rect(263 + j * 25, 95 + i * 25, 90, 10); //pozitionarea gardului orizontal
+            if (a[i][j] == -2)
+                if (i % 2 == 1 && j % 2 == 1)
+                    rect(303 + j * 25, 55 + i * 25, 10, 90); //pozitionarea gardului vertical
+        }
+}
+function mouseClicked() {
+    for (let i = 0; i <= 16; i++)
+        for (let j = 0; j <= 16; j++) {
+            if (a[i][j] == 3) {
+                xBlue = i;
+                yBlue = j
+            }
+            if (a[i][j] == 4) {
+                xRed = i;
+                yRed = j
+            }
+        }
+    //pion mov
+    if (roundPlayer == 1 && comp ==0)
+        if (moveBlue) {
+            if (mouseX < 727 && mouseX > 287 && mouseY > 80 && mouseY < 520) {
+                //dreapta
+                if (roundPlayer == 1 && mouseX >= xComp + 30 && mouseX <= xComp + 70 && mouseY >= yComp - 20 && mouseY <= yComp + 20 && a[xBlue][yBlue + 1] > -1)
+                    if (a[xBlue][yBlue + 2] == 4 && a[xBlue][yBlue + 3] > -1 && a[xBlue][yBlue + 4] == 1) {
+                        jump = 4;
+                        xComp = xComp + 100;
+                        roundPlayer = 2;
+                        a[xBlue][yBlue] = 1;
+                        a[xBlue][yBlue + jump] = 3;
+                    }
+                else {
+                    jump = 2;
+                    xComp = xComp + 50;
+                    roundPlayer = 2;
+                    a[xBlue][yBlue] = 1;
+                    a[xBlue][yBlue + jump] = 3
+                }
+                //stanga
+                if (roundPlayer == 1 && mouseX >= xComp - 70 && mouseX <= xComp - 30 && mouseY >= yComp - 20 && mouseY <= yComp + 20 && a[xBlue][yBlue - 1] > -1)
+                    if (a[xBlue][yBlue - 2] == 4 && a[xBlue][yBlue - 3] > -1 && a[xBlue][yBlue - 4] == 1) {
+                        jump = 4;
+                        xComp = xComp - 100;
+                        roundPlayer = 2;
+                        a[xBlue][yBlue] = 1;
+                        a[xBlue][max(0, yBlue - jump)] = 3
+                    }
+                else {
+                    jump = 2;
+                    xComp = xComp - 50;
+                    roundPlayer = 2;
+                    a[xBlue][yBlue] = 1;
+                    a[xBlue][max(0, yBlue - jump)] = 3
+                }
+                //spate
+                if (roundPlayer == 1 && mouseX >= xComp - 20 && mouseX <= xComp + 20 && mouseY >= yComp - 70 && mouseY <= yComp - 30 && a[xBlue - 1][yBlue] > -1)
+                    if (a[xBlue - 2][yBlue] == 4 && a[xBlue - 3][yBlue] > -1 && a[xBlue - 4][yBlue] == 1) {
+                        jump = 4;
+                        yComp = yComp - 100;
+                        roundPlayer = 2;
+                        a[xBlue][yBlue] = 1;
+                        a[max(0, xBlue - jump)][yBlue] = 3
+                    }
+                else {
+                    jump = 2;
+                    yComp = yComp - 50;
+                    roundPlayer = 2;
+                    a[xBlue][yBlue] = 1;
+                    a[max(0, xBlue - jump)][yBlue] = 3
+                }
+                //fata
+                if (roundPlayer == 1 && mouseX >= xComp - 20 && mouseX <= xComp + 20 && mouseY >= yComp + 30 && mouseY <= yComp + 70 && a[xBlue + 1][yBlue] > -1)
+                    if (a[xBlue + 2][yBlue] == 4 && a[xBlue + 3][yBlue] > -1 && a[xBlue + 4][yBlue] == 1) {
+                        jump = 4;
+                        yComp = yComp + 100;
+                        roundPlayer = 2;
+                        a[xBlue][yBlue] = 1;
+                        a[xBlue + jump][yBlue] = 3
+                    }
+                else {
+                    jump = 2;
+                    yComp = yComp + 50;
+                    roundPlayer = 2;
+                    a[xBlue][yBlue] = 1;
+                    a[xBlue + jump][yBlue] = 3
+                }
+            }
+        }
+
+
+    //pion verde
+    if (roundPlayer == 2)
+        if (moveRed) {
+            if (mouseX < 727 && mouseX > 287 && mouseY > 80 && mouseY < 520) {
+                //dreapta
+                if (roundPlayer == 2 && mouseX >= xUser + 30 && mouseX <= xUser + 70 && mouseY >= yUser - 20 && mouseY <= yUser + 20 && a[xRed][yRed + 1] > -1)
+                    if (a[xRed][yRed + 2] == 3 && a[xRed][yRed + 3] > -1 && a[xRed][yRed + 4] == 1) {
+                        jump = 4;
+                        xUser = xUser + 100;
+                        roundPlayer = 1;
+                        a[xRed][yRed] = 1;
+                        a[xRed][yRed + jump] = 4
+                    }
+                else {
+                    jump = 2;
+                    xUser = xUser + 50;
+                    roundPlayer = 1;
+                    a[xRed][yRed] = 1;
+                    a[xRed][yRed + jump] = 4
+                }
+                //stanga
+                if (roundPlayer == 2 && mouseX >= xUser - 70 && mouseX <= xUser - 30 && mouseY >= yUser - 20 && mouseY <= yUser + 20 && a[xRed][yRed - 1] > -1)
+                    if (a[xRed][yRed - 2] == 3 && a[xRed][yRed - 3] > -1 && a[xRed][yRed - 4] == 1) {
+                        jump = 4;
+                        xUser = xUser - 100;
+                        roundPlayer = 1;
+                        a[xRed][yRed] = 1;
+                        a[xRed][max(0, yRed - jump)] = 4
+                    }
+                else {
+                    jump = 2;
+                    xUser = xUser - 50;
+                    roundPlayer = 1;
+                    a[xRed][yRed] = 1;
+                    a[xRed][max(0, yRed - jump)] = 4
+                }
+                //fata
+                if (roundPlayer == 2 && mouseX >= xUser - 20 && mouseX <= xUser + 20 && mouseY >= yUser - 70 && mouseY <= yUser - 30 && a[xRed - 1][yRed] > -1)
+                    if (a[xRed - 2][yRed] == 3 && a[xRed - 3][yRed] > -1 && a[xRed - 4][yRed] == 1) {
+                        jump = 4;
+                        yUser = yUser - 100;
+                        roundPlayer = 1;
+                        a[xRed][yRed] = 1;
+                        a[max(0, xRed - jump)][yRed] = 4
+                    }
+                else {
+                    jump = 2;
+                    yUser = yUser - 50;
+                    roundPlayer = 1;
+                    a[xRed][yRed] = 1;
+                    a[max(0, xRed - jump)][yRed] = 4
+                }
+                //spate
+                if (roundPlayer == 2 && mouseX >= xUser - 20 && mouseX <= xUser + 20 && mouseY >= yUser + 30 && mouseY <= yUser + 70 && a[xRed + 1][yRed] > -1) {
+                    if (a[xRed + 2][yRed] == 3 && a[xRed + 3][yRed] > -1 && a[xRed + 4][yRed] == 1) {
+                        jump = 4;
+                        yUser = yUser + 100;
+                        roundPlayer = 1;
+                        a[xRed][yRed] = 1;
+                        a[xRed + jump][yRed] = 4
+                    } else {
+                        jump = 2;
+                        yUser = yUser + 50;
+                        roundPlayer = 1;
+                        a[xRed][yRed] = 1;
+                        a[xRed + jump][yRed] = 4
+                    }
+                }
+            }
+        }
+
+    if (roundPlayer == 1 && comp == 0) {
+        if(ziduri1[0]==1)
+        for (i = 0; i < 17; i++)
+            for (j = 0; j < 17; j++)
+                if (i % 2 == 1 && j % 2 == 1) {
+                    if (mouseX >= 300 + j * 25 && mouseX <= 310 + j * 25 && mouseY >= 90 + i * 25 && mouseY <= 105 + i * 25) {
+                        x=i;y=j;
+                        if (vGard) {
+                            if(a[x][y] == 0 && a[x][y - 1] == 0 && a[x][y + 1] == 0)
+                           { a[x][y] = -1;
+                            a[x][y - 1] = -1;
+                            a[x][y + 1] = -1;
+                            roundPlayer = 2;
+                            vGard = false;
+                            ziduri1[zid1]=0;
+                            zid1--;
+                        }     
+                            }
+                            
+                        if (hGard) {
+                            if(a[x][y] == 0 && a[x-1][y]== 0 && a[x+1][y] == 0)
+                            {a[x][y] = -2;
+                            a[x - 1][y] = -2;
+                            a[x + 1][y] = -2;
+                            roundPlayer = 2;
+                            hGard = false;
+                            ziduri1[zid1]=0;
+                            zid1--;
+                            }     
+                        }
+                    }
+                }
+            }
+    if (roundPlayer == 2) {
+        if(ziduri2[0]==1)
+        for (i = 0; i < 17; i++)
+            for (j = 0; j < 17; j++)
+                if (i % 2 == 1 && j % 2 == 1) {
+                    if (mouseX >= 300 + j * 25 && mouseX <= 310 + j * 25 && mouseY >= 90 + i * 25 && mouseY <= 105 + i * 25) {
+                        x=i;y=j;
+                        if (vGard) {
+                            if(a[x][y] == 0 && a[x][y - 1] == 0 && a[x][y + 1] == 0)
+                           { a[x][y] = -1;
+                            a[x][y - 1] = -1;
+                            a[x][y + 1] = -1;
+                            roundPlayer = 1;
+                            vGard = false;
+                            ziduri2[zid2]=0;
+                            zid2--;
+                            }
+                        }
+                        if (hGard) {
+                            if(a[x][y] == 0 && a[x-1][y] == 0 && a[x+1][y] == 0)
+                            {a[x][y] = -2;
+                            a[x - 1][y] = -2;
+                            a[x + 1][y] = -2;
+                            roundPlayer = 1;
+                            hGard = false;
+                            ziduri2[zid2]=0;
+                            zid2--;
+                     }          
+                }
+            }
+       }
+    } 
+}
+
+function computer(){
+    if(comp==1 && roundPlayer == 1){
+        var row = floor(random(3));
+
+        if(row==0){
+            do{
+            var x = floor(random(16));
+            var y = floor(random(16));}
+            while(x%2==0||y%2==0);
+            var spec = floor(random(2));
+            if (spec == 1 && ziduri1[0]==1) {
+                if(a[x][y] == 0 && a[x][y - 1] == 0 && a[x][y + 1] == 0)
+               { a[x][y] = -1;
+                a[x][y - 1] = -1;
+                a[x][y + 1] = -1;
+                roundPlayer = 2;
+                vGard = false;
+                ziduri1[zid1]=0;
+                zid1--;
+            }
+
+                
+            }
+            if (spec == 0) {
+                if(a[x][y] == 0 && a[x-1][y] == 0 && a[x+1][y] == 0)
+                {a[x][y] = -2;
+                a[x - 1][y] = -2;
+                a[x + 1][y] = -2;
+                roundPlayer = 2;
+                hGard = false;
+                ziduri1[zid1]=0;
+                zid1--;
+            }
+
+               
+            }
+        }
+        else {
+            for(i=0;i<17;i++)
+                for(j=0;j<17;j++)
+                    if(a[i][j]==3)
+                    {
+                        var x = i;
+                        var y = j;
+                    }
+                    if(x+2<=16&&a[x+1][y]>-1 && a[x+2][y]==1){
+                        yComp = yComp +50;
+                        a[x][y]=1;
+                        a[x+2][y]=3;
+                        roundPlayer = 2;
+                    }
+                else if(y+2<=16&&a[x][y+1]>-1 && a[x][y+2]==1){
+                    xComp = xComp + 50;
+                    a[x][y]=1;
+                    a[x][y+2]=3;
+                    roundPlayer = 2;
+                } else if(y-2>0&&a[x][y-1]>-1 && a[x][y-2]==1){
+                    xComp = xComp -50;
+                    a[x][y]=1;
+                    a[x][y-2]=3;
+                    roundPlayer = 2;
+                } else  if(x-2>0&&a[x-1][y]>-1 && a[x-2][y]==1)
+                {yComp = yComp - 50;
+                a[x][y]=1;
+                a[x-2][y]=3;
+                roundPlayer = 2;}
+        }
+    }
+}
+function Blue() {
+    if (roundPlayer == 1 && comp ==0) {
+        hGard = false;
+        vGard = false;
+        moveBlue = true;
+        moveRed = false;
+    }
+}
+
+function Red() {
+    if (roundPlayer == 2) {
+        hGard = false;
+        vGard = false;
+        moveRed = true;
+        moveBlue = false;
+    }
+}
+
+function vGard1() {
+    if (roundPlayer == 1 && comp ==0) {
+        hGard = false;
+        vGard = true;
+        moveBlue = false;
+        moveRed = false;
+    }
+}
+
+function vGard2() {
+    if (roundPlayer == 2) {
+        hGard = false;
+        vGard = true;
+        moveBlue = false;
+        moveRed = false;
+    }
+}
+
+function hGard1() {
+    if (roundPlayer == 1 && comp ==0) {
+        vGard = false;
+        hGard = true;
+        moveBlue = false;
+        moveRed = false;
+    }
+}
+
+function hGard2() {
+    if (roundPlayer == 2) {
+        vGard = false;
+        hGard = true;
+        moveBlue = false;
+        moveRed = false;
+    }
+}
+
+    </script>
 </body>
+
 </html>
